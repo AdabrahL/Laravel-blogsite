@@ -11,9 +11,11 @@ class AdminBlogController extends Controller
     // ✅ Show Dashboard
     public function dashboard()
     {
-        // ✅ paginate blogs
         $blogs = Blog::latest()->paginate(10);
-        return view('admin.dashboard', compact('blogs'));
+        $blogsCount = Blog::count();
+        $publishedCount = Blog::where('status', 'published')->count();
+
+        return view('admin.dashboard', compact('blogs', 'blogsCount', 'publishedCount'));
     }
 
     // ✅ Show Create Page
@@ -29,9 +31,11 @@ class AdminBlogController extends Controller
             'title'   => 'required|string|max:255',
             'content' => 'required|string',
             'image'   => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'status'  => 'nullable|string|in:published,draft',
         ]);
 
-        $data = $request->only('title', 'content');
+        $data = $request->only('title', 'content', 'status');
+        $data['status'] = $data['status'] ?? 'published'; // default to published
 
         // ✅ Handle Image Upload
         if ($request->hasFile('image')) {
@@ -56,13 +60,14 @@ class AdminBlogController extends Controller
             'title'   => 'required|string|max:255',
             'content' => 'required|string',
             'image'   => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'status'  => 'nullable|string|in:published,draft',
         ]);
 
-        $data = $request->only('title', 'content');
+        $data = $request->only('title', 'content', 'status');
+        $data['status'] = $data['status'] ?? 'published';
 
         // ✅ Handle Image Update
         if ($request->hasFile('image')) {
-            // delete old image if exists
             if ($blog->image && Storage::disk('public')->exists($blog->image)) {
                 Storage::disk('public')->delete($blog->image);
             }
@@ -77,7 +82,6 @@ class AdminBlogController extends Controller
     // ✅ Delete Blog
     public function destroy(Blog $blog)
     {
-        // delete image if exists
         if ($blog->image && Storage::disk('public')->exists($blog->image)) {
             Storage::disk('public')->delete($blog->image);
         }

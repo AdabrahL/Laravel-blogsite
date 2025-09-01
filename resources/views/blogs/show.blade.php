@@ -30,8 +30,8 @@
 
             {{-- ✅ Blog Content --}}
             <div class="fs-5 lh-lg text-dark" style="text-align: justify;">
-                {!! nl2br(e($blog->content)) !!}
-            </div>
+    {!! $blog->content !!}
+</div>
 
             {{-- ✅ Back Button --}}
             <div class="text-center mt-5">
