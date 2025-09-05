@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #0E2004;">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">BlogSite</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -6,35 +6,16 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ route('blogs.index') }}">
-                        Blog
-                    </a>
-                </li>
+           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    @foreach($categories as $category)
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('category.show', $category->id) }}">
+                {{ $category->name }}
+            </a>
+        </li>
+    @endforeach
+</ul>
 
-                @auth
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->is('admin*') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
-                            Dashboard
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button type="submit" class="btn btn-link nav-link" style="display:inline; cursor:pointer;">
-                                Logout
-                            </button>
-                        </form>
-                    </li>
-                @else
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->is('login') ? 'active' : '' }}" href="{{ route('login') }}">
-                            Login
-                        </a>
-                    </li>
-                @endauth
-            </ul>
         </div>
     </div>
 </nav>

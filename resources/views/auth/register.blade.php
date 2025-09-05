@@ -1,77 +1,68 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+  <div class="card shadow-lg p-4" style="max-width: 500px; width: 100%;">
+    <h3 class="text-center mb-4">Register</h3>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
+    <form method="POST" action="{{ route('register') }}">
+      @csrf
 
-                        <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
+      <!-- Social buttons -->
+      <div class="text-center mb-3">
+        <p>Sign up with:</p>
+        <button type="button" class="btn btn-link btn-floating mx-1"><i class="fab fa-facebook-f"></i></button>
+        <button type="button" class="btn btn-link btn-floating mx-1"><i class="fab fa-google"></i></button>
+        <button type="button" class="btn btn-link btn-floating mx-1"><i class="fab fa-twitter"></i></button>
+        <button type="button" class="btn btn-link btn-floating mx-1"><i class="fab fa-github"></i></button>
+      </div>
 
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+      <p class="text-center">or:</p>
 
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+      <!-- Name -->
+      <div class="form-outline mb-4">
+        <input type="text" id="registerName" name="name" class="form-control" required />
+        <label class="form-label" for="registerName">Name</label>
+      </div>
 
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+      <!-- Username -->
+      <div class="form-outline mb-4">
+        <input type="text" id="registerUsername" name="username" class="form-control" required />
+        <label class="form-label" for="registerUsername">Username</label>
+      </div>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+      <!-- Email -->
+      <div class="form-outline mb-4">
+        <input type="email" id="registerEmail" name="email" class="form-control" required />
+        <label class="form-label" for="registerEmail">Email</label>
+      </div>
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+      <!-- Password -->
+      <div class="form-outline mb-4">
+        <input type="password" id="registerPassword" name="password" class="form-control" required />
+        <label class="form-label" for="registerPassword">Password</label>
+      </div>
 
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+      <!-- Confirm password -->
+      <div class="form-outline mb-4">
+        <input type="password" id="registerRepeatPassword" name="password_confirmation" class="form-control" required />
+        <label class="form-label" for="registerRepeatPassword">Repeat password</label>
+      </div>
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+      <!-- Terms -->
+      <div class="form-check d-flex justify-content-center mb-4">
+        <input class="form-check-input me-2" type="checkbox" required id="registerCheck" />
+        <label class="form-check-label" for="registerCheck"> I have read and agree to the terms </label>
+      </div>
 
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+      <!-- Submit -->
+      <button type="submit" class="btn btn-primary btn-block mb-3">Sign up</button>
 
-                        <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+      <!-- Login link -->
+      <div class="text-center">
+        <p>Already a member? <a href="{{ route('login') }}">Login</a></p>
+      </div>
+    </form>
+  </div>
 </div>
 @endsection

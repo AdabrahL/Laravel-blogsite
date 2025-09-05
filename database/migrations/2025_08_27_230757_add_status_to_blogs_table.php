@@ -9,14 +9,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('blogs', function (Blueprint $table) {
-            $table->string('status')->default('published')->after('content');
+            $table->foreignId('category_id')
+                  ->constrained()
+                  ->onDelete('cascade')
+                  ->after('id'); // put after id for clarity
         });
     }
 
     public function down(): void
     {
         Schema::table('blogs', function (Blueprint $table) {
-            $table->dropColumn('status');
+            $table->dropForeign(['category_id']);
+            $table->dropColumn('category_id');
         });
     }
 };

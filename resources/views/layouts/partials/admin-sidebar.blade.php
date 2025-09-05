@@ -6,14 +6,20 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Dashboard
                 </a>
+
                 <a class="nav-link" href="{{ route('admin.create') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-plus-circle"></i></div>
                     Create Blog
                 </a>
-                
-                  <a class="nav-link" href="{{ route('admin.create') }}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-plus-circle"></i></div>
-                    Create Admin
+
+                <a class="nav-link" href="{{ route('categories.index') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-list"></i></div>
+                    Categories
+                </a>
+
+                <a class="nav-link" href="{{ route('admin.create') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-user-plus"></i></div>
+                    Add Admin
                 </a>
 
                 <a class="nav-link" href="{{ route('blogs.index') }}" target="_blank">

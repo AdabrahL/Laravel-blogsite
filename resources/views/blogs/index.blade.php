@@ -1,5 +1,6 @@
 @extends('layouts.app')
-
+@include('layouts.navbar')
+@include('layouts.carousel')
 @section('content')
 <div class="container">
     <h1 class="mb-5 text-center fw-bold">Latest Blog Posts</h1>
@@ -60,4 +61,5 @@
         @endif
     </div>
 </div>
+@include('layouts.footer')
 @endsection

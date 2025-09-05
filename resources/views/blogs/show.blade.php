@@ -1,6 +1,10 @@
 @extends('layouts.app')
+@include('layouts.navbar')
+@include('layouts.carousel')
 
 @section('content')
+
+
 <div class="container my-5">
 
     <div class="card shadow-lg border-0 rounded-3 overflow-hidden">

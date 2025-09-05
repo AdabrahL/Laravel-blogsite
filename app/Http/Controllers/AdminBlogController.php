@@ -26,26 +26,26 @@ class AdminBlogController extends Controller
 
     // ✅ Store Blog
     public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'title'   => 'required|string|max:255',
-            'content' => 'required|string',
-            'image'   => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
-            'status'  => 'nullable|string|in:published,draft',
-        ]);
+{
+    $request->validate([
+        'title'       => 'required|string|max:255',
+        'content'     => 'required|string',
+        'category_id' => 'required|exists:categories,id',
+        'status'      => 'required|in:published,draft',
+        'image'       => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+    ]);
 
-        $data = $request->only('title', 'content', 'status');
-        $data['status'] = $data['status'] ?? 'published'; // default to published
+    $data = $request->only(['title', 'content', 'status', 'category_id']);
 
-        // ✅ Handle Image Upload
-        if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('blogs', 'public');
-        }
-
-        Blog::create($data);
-
-        return redirect()->route('admin.dashboard')->with('success', 'Blog created successfully!');
+    if ($request->hasFile('image')) {
+        $data['image'] = $request->file('image')->store('blogs', 'public');
     }
+
+    \App\Models\Blog::create($data);
+
+    return redirect()->route('admin.dashboard')->with('success', 'Blog created!');
+}
+
 
     // ✅ Show Edit Page
     public function edit(Blog $blog)
@@ -54,30 +54,32 @@ class AdminBlogController extends Controller
     }
 
     // ✅ Update Blog
-    public function update(Request $request, Blog $blog)
-    {
-        $validated = $request->validate([
-            'title'   => 'required|string|max:255',
-            'content' => 'required|string',
-            'image'   => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
-            'status'  => 'nullable|string|in:published,draft',
-        ]);
+   public function update(Request $request, Blog $blog)
+{
+    $validated = $request->validate([
+        'title'       => 'required|string|max:255',
+        'content'     => 'required|string',
+        'category_id' => 'required|exists:categories,id',
+        'image'       => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+        'status'      => 'nullable|string|in:published,draft',
+    ]);
 
-        $data = $request->only('title', 'content', 'status');
-        $data['status'] = $data['status'] ?? 'published';
+    $data = $request->only('title', 'content', 'status', 'category_id');
+    $data['status'] = $data['status'] ?? 'published';
 
-        // ✅ Handle Image Update
-        if ($request->hasFile('image')) {
-            if ($blog->image && Storage::disk('public')->exists($blog->image)) {
-                Storage::disk('public')->delete($blog->image);
-            }
-            $data['image'] = $request->file('image')->store('blogs', 'public');
+    // ✅ Handle Image Update
+    if ($request->hasFile('image')) {
+        if ($blog->image && Storage::disk('public')->exists($blog->image)) {
+            Storage::disk('public')->delete($blog->image);
         }
-
-        $blog->update($data);
-
-        return redirect()->route('admin.dashboard')->with('success', 'Blog updated successfully!');
+        $data['image'] = $request->file('image')->store('blogs', 'public');
     }
+
+    $blog->update($data);
+
+    return redirect()->route('admin.dashboard')->with('success', 'Blog updated successfully!');
+}
+
 
     // ✅ Delete Blog
     public function destroy(Blog $blog)

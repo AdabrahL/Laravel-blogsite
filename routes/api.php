@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\BlogController;  // Correct namespace for the BlogController
+use App\Http\Controllers\Api\AuthController;
 
 Route::prefix('v1')->group(function () {
     // List all blogs
@@ -18,4 +19,10 @@ Route::prefix('v1')->group(function () {
     
     // Delete a blog
     Route::delete('blogs/{blog}', [BlogController::class, 'destroy']);
+    
+    // register
+    Route::post('/register', [AuthController::class, 'register']);
+    // Login
+    Route::post('/login', [AuthController::class, 'login']);
+
 });

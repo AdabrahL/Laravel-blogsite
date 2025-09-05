@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AdminBlogController;
 
 // ✅ Public blog routes
@@ -23,4 +24,14 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::put('/{blog}', [AdminBlogController::class, 'update'])->name('admin.update');
 
     Route::delete('/{blog}', [AdminBlogController::class, 'destroy'])->name('admin.destroy');
+    
+    
+
+Route::prefix('admin')->group(function () {
+    Route::resource('categories', CategoryController::class);
+});
+
+Route::get('/category/{id}', [App\Http\Controllers\BlogController::class, 'byCategory'])->name('category.show');
+
+
 });

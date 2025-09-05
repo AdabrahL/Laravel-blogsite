@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.admin')  
 
 @section('title', 'Create Blog')
 
@@ -25,29 +25,52 @@
 
                     <form action="{{ route('admin.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
+                        
+                        <!-- Title -->
                         <div class="mb-3">
                             <label for="title" class="form-label">Title</label>
-                            <input type="text" name="title" class="form-control" id="title" value="{{ old('title') }}" required>
+                            <input 
+                                type="text" 
+                                name="title" 
+                                class="form-control" 
+                                id="title" 
+                                value="{{ old('title') }}" 
+                                required>
                         </div>
 
+                        <!-- Content -->
                         <div class="mb-3">
                             <label for="content" class="form-label">Content</label>
                             <textarea name="content" id="content" rows="10">{{ old('content') }}</textarea>
                         </div>
 
+                        <!-- ✅ Category Dropdown -->
+                        <div class="mb-3">
+                            <label for="category_id" class="form-label">Category</label>
+                            <select name="category_id" id="category_id" class="form-control" required>
+                                <option value="">-- Select Category --</option>
+                                @foreach($categories as $category)
+<option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Image -->
                         <div class="mb-3">
                             <label for="image" class="form-label">Featured Image</label>
                             <input type="file" name="image" class="form-control" id="image">
                         </div>
 
+                        <!-- Status -->
                         <div class="mb-3">
                             <label for="status" class="form-label">Status</label>
-                            <select name="status" id="status" class="form-select">
+                            <select name="status" id="status" class="form-select" required>
                                 <option value="published" {{ old('status') == 'published' ? 'selected' : '' }}>Published</option>
                                 <option value="draft" {{ old('status') == 'draft' ? 'selected' : '' }}>Draft</option>
                             </select>
                         </div>
 
+                        <!-- Buttons -->
                         <button type="submit" class="btn btn-success">
                             <i class="fas fa-save"></i> Save Blog
                         </button>
