@@ -53,7 +53,8 @@ class BlogController extends Controller
 
     public function destroy(Blog $blog)
     {
+
         $blog->delete();
-        return response()->json(null, 204);  // No content after deletion
+        return response()->json(["Message"=>"Post Delete Succesfullyd"], 200);  // No content after deletion
     }
 }

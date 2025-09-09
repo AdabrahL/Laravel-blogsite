@@ -29,7 +29,15 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return response()->json(['message' => 'User registered successfully', 'user' => $user], 201);
+        // ✅ Create token
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'message' => 'User registered successfully',
+            'user' => $user,
+            'token' => $token, // Send token back
+            'token_type' => 'Bearer'
+        ], 201);
     }
 
     // Login
@@ -41,6 +49,23 @@ class AuthController extends Controller
             return response()->json(['error' => 'Invalid credentials'], 401);
         }
 
-        return response()->json(['message' => 'Login successful', 'user' => $user], 200);
+        // ✅ Create token
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'message' => 'Login successful',
+            'user' => $user,
+            'token' => $token, // Send token back
+            'token_type' => 'Bearer'
+        ], 200);
+    }
+
+    // Logout
+    public function logout(Request $request)
+    {
+        // ✅ Revoke current token
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json(['message' => 'Logged out successfully']);
     }
 }
