@@ -13,14 +13,12 @@
 
     <!-- Font Awesome Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+<link href="{{ asset('css/style.css') }}" rel="stylesheet">
+
 
     <style>
-        body {
-            background: #f5f6fa;
-        }
-        .card {
-            border-radius: 15px;
-        }
+       
+
     </style>
 </head>
 <body>
@@ -35,5 +33,17 @@
 
     <!-- MDBootstrap -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"></script>
+
+    <script>
+    window.addEventListener('scroll', function () {
+        const nav = document.querySelector('.main-navigation-container');
+        if (window.scrollY > 50) {
+            nav.classList.add('sticky-navbar');
+        } else {
+            nav.classList.remove('sticky-navbar');
+        }
+    });
+</script>
+
 </body>
 </html>

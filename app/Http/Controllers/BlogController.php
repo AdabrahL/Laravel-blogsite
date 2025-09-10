@@ -6,19 +6,31 @@ use App\Models\Blog;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Schema;
+
 
 class BlogController extends Controller
 {
     // Public: Show all blogs
     public function index()
     {
-        $blogs = Blog::with('category')->latest()->paginate(6);
-        return view('blogs.index', compact('blogs'));
+        // Show 15 blogs per page
+        $blogs = Blog::with('category')->latest()->paginate(15);
+
+        // Trending posts (if you have a "views" column in blogs table)
+        if (Schema::hasColumn('blogs', 'views')) {
+            $trending = Blog::with('category')->orderBy('views', 'desc')->take(5)->get();
+        } else {
+            // fallback: use most recent blogs
+            $trending = Blog::with('category')->latest()->take(5)->get();
+        }
+
+        return view('blogs.index', compact('blogs', 'trending'));
     }
 
     // Public: Show single blog
     public function show(Blog $blog)
-    {
+    {$blog->increment('views'); // 👈 adds 1 each time opened
         return view('blogs.show', compact('blog'));
     }
 
@@ -39,17 +51,15 @@ class BlogController extends Controller
     // Admin: Store new blog
     public function store(Request $request)
     {
-      dd($request->all());
-      
         $request->validate([
             'title'       => 'required|string|max:255',
             'content'     => 'required|string',
             'category_id' => 'required|exists:categories,id',
-            'status'=> 'required|in:published,draft' ,
+            'status'      => 'required|in:published,draft',
             'image'       => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $data = $request->only(['title', 'content','status','category_id']); // ✅ safer than $request->all()
+        $data = $request->only(['title', 'content', 'status', 'category_id']);
 
         // Handle image upload
         if ($request->hasFile('image')) {
@@ -71,7 +81,6 @@ class BlogController extends Controller
     // Admin: Update blog
     public function update(Request $request, Blog $blog)
     {
-        dd($request->all());
         $request->validate([
             'title'       => 'required|string|max:255',
             'content'     => 'required|string',
@@ -98,7 +107,6 @@ class BlogController extends Controller
     // Admin: Delete blog
     public function destroy(Blog $blog)
     {
-        // Delete associated image if it exists
         if ($blog->image && Storage::disk('public')->exists($blog->image)) {
             Storage::disk('public')->delete($blog->image);
         }
@@ -111,7 +119,7 @@ class BlogController extends Controller
     public function byCategory($id)
     {
         $category = Category::findOrFail($id);
-        $blogs = $category->blogs()->latest()->paginate(10);
+        $blogs = $category->blogs()->latest()->paginate(50);
 
         return view('blogs.byCategory', compact('category', 'blogs'));
     }

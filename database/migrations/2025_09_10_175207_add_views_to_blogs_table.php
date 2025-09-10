@@ -9,12 +9,13 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+   public function up()
 {
     Schema::table('blogs', function (Blueprint $table) {
-        $table->foreignId('category_id')->constrained()->onDelete('cascade');
+        $table->unsignedBigInteger('views')->default(0);
     });
 }
+
 
     /**
      * Reverse the migrations.

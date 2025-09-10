@@ -1,0 +1,182 @@
+
+body {
+    background-color: #e1eaf3; /* Light gray */
+   
+}
+/* ===== TOP BAR ===== */
+.top-bar {
+    background: #f8f9fa;
+    border-bottom: 1px solid #ddd;
+    padding: 0.6rem 0;
+    font-size: 0.9rem;
+}
+
+/* Make top-bar items centered horizontally */
+.top-bar .container {
+    justify-content: center !important;
+    gap: 2rem; /* equal spacing between sections */
+}
+
+.top-bar .navbar-brand {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #0b3d91;
+    margin-bottom: 0; /* keeps logo aligned */
+    display: flex;
+    align-items: center;
+}
+
+/* Social icons */
+.top-bar .socialbtns img {
+    height: 22px;
+    margin-right: 8px;
+    transition: transform 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+}
+.top-bar .socialbtns img:hover {
+    transform: scale(1.15);
+    display: flex;
+    align-items: center;
+}
+
+/* Search bar aligned center */
+.top-bar .search-area-con {
+    position: relative;
+    display: flex;
+    align-items: center;
+    display: flex;
+    align-items: center;
+}
+.top-bar .search--input {
+    height: 36px; /* same height across devices */
+    padding: 0 35px 0 12px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    outline: none;
+    min-width: 200px;
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+}
+.top-bar .search--input:focus {
+    border-color: #0b3d91;
+    box-shadow: 0 0 4px rgba(11, 61, 145, 0.5);
+    display: flex;
+    align-items: center;
+}
+.top-bar .search-icon {
+    position: absolute;
+    right: 12px;
+    height: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.7;
+    display: flex;
+    align-items: center;
+}
+
+/* Contact links */
+.top-bar .Contact-advert-links a {
+    margin: 0 10px;
+    color: #333;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.top-bar .Contact-advert-links a:hover {
+    color: #0b3d91;
+}
+
+/* Login/Signup */
+.top-bar .login-signup-btns a {
+    margin-left: 12px;
+    color: #0b3d91;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.top-bar .login-signup-btns a:hover {
+    color: #ffcc00;
+}
+
+
+/* ===== NAVBAR ===== */
+.main-navigation-container {
+    background: #0b3d91;
+    padding: 0.5rem 0;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    transition: background 0.10s ease-in-out, padding 0.4s;
+}
+
+.main-navigation-container .nav-link {
+    color: white !important;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Hover underline animation */
+.main-navigation-container .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background: #ffcc00;
+    transition: all 0.3s ease-in-out;
+    transform: translateX(-50%);
+}
+.main-navigation-container .nav-link:hover::after,
+.main-navigation-container .nav-link.active::after {
+    width: 60%;
+}
+.main-navigation-container .nav-link:hover {
+    color: #ffcc00 !important;
+    transform: translateY(-2px);
+}
+
+/* Sticky Navbar smaller on scroll */
+.sticky-navbar {
+    background: #072d6b !important;
+    padding: 0.3rem 0;
+}
+/* Banner Images */
+.banner-img {
+    height: 400px;
+    object-fit: cover;
+    filter: brightness(0.5); /* dark overlay effect */
+}
+
+/* Carousel Caption Styling */
+.carousel-caption {
+    bottom: 20%;
+    text-align: center;
+}
+
+.carousel-caption .heading h1 {
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+}
+
+.carousel-caption h5 {
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+    text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
+}
+
+/* CTA Button */
+.btn-anim {
+    font-weight: 600;
+    padding: 0.7rem 1.5rem;
+    border-radius: 50px;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-anim:hover {
+    transform: translateY(-3px);
+    background-color: #ffcc00;
+    color: #0b3d91;
+}
