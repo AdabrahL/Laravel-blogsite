@@ -1,61 +1,66 @@
 @extends('layouts.app')
+
 @include('layouts.navbar')
 
+@section('title', $blog->title)
 
 @section('content')
 <div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
 
-    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+            {{-- ✅ Blog Card --}}
+            <div class="card shadow-lg border-0 rounded-4 overflow-hidden blog-fade">
+                {{-- Blog Image --}}
+                @if($blog->image)
+                    <div class="blog-image-wrapper">
+                        <img src="{{ asset('storage/' . $blog->image) }}" 
+                             alt="{{ $blog->title }}" 
+                             class="blog-image w-100">
+                    </div>
+                @else
+                    <div class="blog-image-wrapper">
+                        <img src="https://via.placeholder.com/800x450" 
+                             alt="No Image" 
+                             class="blog-image w-100">
+                    </div>
+                @endif
 
-        {{-- ✅ Blog Image --}}
-        @if($blog->image)
-            <img src="{{ asset('storage/' . $blog->image) }}" 
-                 alt="{{ $blog->title }}" 
-                 class="w-100"
-                 style="max-height: 450px; object-fit: cover; border-bottom: 4px solid #0b3d91;">
-        @else
-            <img src="https://via.placeholder.com/1200x450?text=No+Image" 
-                 alt="No image" 
-                 class="w-100"
-                 style="max-height: 450px; object-fit: cover; border-bottom: 4px solid #0b3d91;">
-        @endif
+                <div class="card-body p-5">
+                    {{-- ✅ Category + Date + Views --}}
+                    <div class="d-flex justify-content-between align-items-center mb-3 fade-in-up">
+                        <span class="badge rounded-pill px-3 py-2" 
+                              style="background:#0b3d91; color:#fff;">
+                            {{ $blog->category->name ?? 'General' }}
+                        </span>
+                        <div class="text-muted small">
+                            {{ $blog->created_at->format('F d, Y') }} · 👁 {{ $blog->views ?? 0 }}
+                        </div>
+                    </div>
 
-        <div class="card-body p-5">
+                    {{-- ✅ Blog Title --}}
+                    <h1 class="fw-bold mb-4 fade-in-up delay-1" style="color:#0b3d91;">
+                        {{ $blog->title }}
+                    </h1>
 
-            {{-- ✅ Blog Category Badge --}}
-            @if($blog->category)
-                <div class="text-center mb-3">
-                    <span class="badge rounded-pill px-4 py-2" 
-                          style="background: #0b3d91; color: #fff; font-size: 0.9rem;">
-                        {{ $blog->category->name }}
-                    </span>
+                    {{-- ✅ Blog Content --}}
+                    <div class="blog-content fade-in-up delay-2">
+                        {!! $blog->content !!}
+                    </div>
                 </div>
-            @endif
-
-            {{-- ✅ Blog Title --}}
-            <h1 class="fw-bold mb-3 text-center" style="color: #0b3d91;">
-                {{ $blog->title }}
-            </h1>
-
-            {{-- ✅ Blog Meta Info --}}
-            <p class="text-muted text-center mb-4">
-                Published on {{ $blog->created_at->format('F d, Y') }}
-            </p> 
-
-            {{-- ✅ Blog Content --}}
-            <div class="fs-5 lh-lg text-dark" style="text-align: justify;">
-                {!! $blog->content !!}
             </div>
 
             {{-- ✅ Back Button --}}
-            <div class="text-center mt-5">
-                <a href="{{ route('blogs.index') }}" 
-                   class="btn btn-lg btn-outline-primary px-4 rounded-pill shadow-sm">
-                    ← Back to Blogs
+            <div class="mt-4 text-center fade-in-up delay-3">
+                <a href="{{ url()->previous() }}" 
+                   class="btn btn-outline-secondary rounded-pill px-4 shadow-sm">
+                    ← Back
                 </a>
             </div>
 
         </div>
     </div>
 </div>
+
+
 @endsection
