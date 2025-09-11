@@ -11,15 +11,21 @@
         @forelse ($blogs as $blog)
             <div class="col-md-4 mb-4">
                 <div class="card h-100 shadow-sm">
+                    {{-- ✅ Blog Image --}}
                     @if($blog->image)
-                        <img src="{{ asset('storage/' . $blog->image) }}" class="card-img-top" alt="{{ $blog->title }}">
+                        <img src="{{ asset('storage/' . $blog->image) }}" 
+                             class="card-img-top" 
+                             alt="{{ $blog->title }}" 
+                             style="height:200px; object-fit:cover;">
                     @else
-                        <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="No Image">
+                        <img src="https://via.placeholder.com/400x200" 
+                             class="card-img-top" 
+                             alt="No Image">
                     @endif
 
                     <div class="card-body d-flex flex-column p-4">
 
-                        {{-- ✅ Category + Date Row --}}
+                        {{-- ✅ Category + Date + Views Row --}}
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             @if($blog->category)
                                 <span class="badge rounded-pill px-2 py-1" 
@@ -27,9 +33,9 @@
                                     {{ $blog->category->name }}
                                 </span>
                             @endif
-                            <small class="text-muted">
-                                {{ $blog->created_at->format('M d, Y') }}
-                            </small>
+                            <div class="text-muted small">
+                                {{ $blog->created_at->format('M d, Y') }} · 👁 {{ $blog->views ?? 0 }}
+                            </div>
                         </div>
 
                         {{-- ✅ Blog Title --}}

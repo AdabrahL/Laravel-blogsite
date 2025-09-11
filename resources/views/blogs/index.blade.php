@@ -21,7 +21,7 @@
                             {{ $blogs[0]->title }}
                         </h2>
                         <p class="text-muted small mb-3">
-                            {{ $blogs[0]->created_at->format('F d, Y') }}
+                            {{ $blogs[0]->created_at->format('F d, Y') }} • 👁 {{ $blogs[0]->views }} views
                         </p>
                         <p class="text-dark" style="line-height:1.6;">
                             {!! Str::limit(strip_tags($blogs[0]->content), 200) !!}
@@ -48,7 +48,7 @@
                                 {{ Str::limit($blog->title, 50) }}
                             </a>
                             <p class="text-muted small mb-0">
-                                {{ $blog->created_at->format('M d, Y') }}
+                                {{ $blog->created_at->format('M d, Y') }} • 👁 {{ $blog->views }} views
                             </p>
                         </div>
                     </div>
@@ -57,34 +57,33 @@
         </div>
     @endif
 
-{{-- ✅ Trending Section --}}
-@if($blogs->count() > 5)
-    <h3 class="fw-bold mb-4">🔥 Trending Now</h3>
-    <div class="row row-cols-1 row-cols-md-5 g-4 mb-5">
-        @foreach($blogs->take(5) as $trend)
-            <div class="col">
-                <div class="card border-0 shadow-sm rounded-3 overflow-hidden h-100">
-                    <a href="{{ route('blogs.show', $trend->id) }}">
-                        <img src="{{ $trend->image ? asset('storage/' . $trend->image) : 'https://via.placeholder.com/600x400?text=No+Image' }}" 
-                             class="card-img-top" 
-                             style="height: 120px; object-fit: cover; filter: brightness(85%);">
-                    </a>
-                    <div class="card-body p-2">
-                        <h6 class="fw-semibold text-truncate" style="font-size: 14px;">
-                            <a href="{{ route('blogs.show', $trend->id) }}" class="text-decoration-none text-dark">
-                                {{ $trend->title }}
-                            </a>
-                        </h6>
-                        <small class="text-muted">
-                            {{ $trend->created_at->format('M d, Y') }}
-                        </small>
+    {{-- ✅ Trending Section --}}
+    @if(isset($trending) && $trending->count())
+        <h3 class="fw-bold mb-4">🔥 Trending Now</h3>
+        <div class="row row-cols-1 row-cols-md-5 g-4 mb-5">
+            @foreach($trending as $trend)
+                <div class="col">
+                    <div class="card border-0 shadow-sm rounded-3 overflow-hidden h-100">
+                        <a href="{{ route('blogs.show', $trend->id) }}">
+                            <img src="{{ $trend->image ? asset('storage/' . $trend->image) : 'https://via.placeholder.com/600x400?text=No+Image' }}" 
+                                 class="card-img-top" 
+                                 style="height: 120px; object-fit: cover; filter: brightness(85%);">
+                        </a>
+                        <div class="card-body p-2">
+                            <h6 class="fw-semibold text-truncate" style="font-size: 14px;">
+                                <a href="{{ route('blogs.show', $trend->id) }}" class="text-decoration-none text-dark">
+                                    {{ $trend->title }}
+                                </a>
+                            </h6>
+                            <small class="text-muted">
+                                {{ $trend->created_at->format('M d, Y') }} • 👁 {{ $trend->views }} views
+                            </small>
+                        </div>
                     </div>
                 </div>
-            </div>
-        @endforeach
-    </div>
-@endif
-
+            @endforeach
+        </div>
+    @endif
 
     {{-- 🔹 Blog Grid --}}
     <h3 class="fw-bold mb-4">More Stories</h3>
@@ -101,7 +100,7 @@
                                 {{ $blog->category->name ?? 'General' }}
                             </span>
                             <small class="text-muted">
-                                {{ $blog->created_at->format('M d, Y') }}
+                                {{ $blog->created_at->format('M d, Y') }} • 👁 {{ $blog->views }} views
                             </small>
                         </div>
                         <h6 class="fw-bold text-truncate" style="color:#0b3d91;">

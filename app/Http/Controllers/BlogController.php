@@ -17,13 +17,11 @@ class BlogController extends Controller
         // Show 15 blogs per page
         $blogs = Blog::with('category')->latest()->paginate(15);
 
-        // Trending posts (if you have a "views" column in blogs table)
-        if (Schema::hasColumn('blogs', 'views')) {
-            $trending = Blog::with('category')->orderBy('views', 'desc')->take(5)->get();
-        } else {
-            // fallback: use most recent blogs
-            $trending = Blog::with('category')->latest()->take(5)->get();
-        }
+        // ✅ Real Trending: sort by views
+    $trending = Blog::with('category')
+                    ->orderBy('views', 'desc')
+                    ->take(5)
+                    ->get();
 
         return view('blogs.index', compact('blogs', 'trending'));
     }
