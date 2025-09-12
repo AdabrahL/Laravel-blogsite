@@ -1,0 +1,244 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "BlogSite API",
+        "description": "API documentation for BlogSite (Blogs, Categories, Users).",
+        "contact": {
+            "name": "BlogSite Support",
+            "email": "support@blogsite.test"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://blogsite.test",
+            "description": "Local Development Server"
+        },
+        {
+            "url": "http://blogsite.test",
+            "description": "Production Server"
+        },
+        {
+            "url": "/api/v1"
+        }
+    ],
+    "paths": {
+        "/api/v1/blogs": {
+            "get": {
+                "tags": [
+                    "Blogs"
+                ],
+                "summary": "Get all blogs",
+                "operationId": "07782211343b1656aadbd4811553e997",
+                "responses": {
+                    "200": {
+                        "description": "List of blogs"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Blogs"
+                ],
+                "summary": "Create a new blog",
+                "operationId": "2b16865d24ba0dd832dfe7d6b531e76d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "content",
+                                    "category_id"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "My First Blog"
+                                    },
+                                    "content": {
+                                        "type": "string",
+                                        "example": "This is the blog content"
+                                    },
+                                    "category_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Blog created successfully"
+                    },
+                    "400": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/v1/blogs/{id}": {
+            "get": {
+                "tags": [
+                    "Blogs"
+                ],
+                "summary": "Get a single blog",
+                "operationId": "1ca106e145f3239c1c3fd914c7d6a476",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Blog details"
+                    },
+                    "404": {
+                        "description": "Blog not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Blogs"
+                ],
+                "summary": "Update a blog",
+                "operationId": "02185bb89abd33dc646595df9c436046",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Updated Blog"
+                                    },
+                                    "content": {
+                                        "type": "string",
+                                        "example": "Updated blog content"
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Blog updated successfully"
+                    },
+                    "404": {
+                        "description": "Blog not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Blogs"
+                ],
+                "summary": "Delete a blog",
+                "operationId": "9e8ed8b84fa03eb2d93d99ca7601e12c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Blog deleted successfully"
+                    },
+                    "404": {
+                        "description": "Blog not found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Blog": {
+                "title": "Blog",
+                "required": [
+                    "id",
+                    "title",
+                    "content",
+                    "category_id"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "My First Blog"
+                    },
+                    "content": {
+                        "type": "string",
+                        "example": "This is the blog content"
+                    },
+                    "category_id": {
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "image": {
+                        "type": "string",
+                        "example": "blogs/example.png"
+                    },
+                    "status": {
+                        "type": "string",
+                        "example": "published"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Blogs",
+            "description": "Blogs"
+        }
+    ]
+}
